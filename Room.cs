@@ -3,6 +3,10 @@ using System;
 
 namespace DungeonExplorer
 {
+    /// <summary>
+    /// Contains room number, item, item chance, item room and lists for possible items and room descriptions
+    /// as well as methods to get room description, check if the room has an item and get a random item
+    /// </summary>
     public class Room
     {
         public int roomNumber;
@@ -15,6 +19,9 @@ namespace DungeonExplorer
 
         private static readonly Random random = new Random();
 
+        /// <summary>
+        /// set the rooms default fields
+        /// </summary>
         public Room()
         {
             this.roomNumber = 0;
@@ -34,6 +41,9 @@ namespace DungeonExplorer
             Console.Clear();
         }
 
+        /// <summary>
+        /// displays the description of the room
+        /// </summary>
         public void GetDescription()
         {
              // generate the room description by iterating through the arrays giving more gloomy descriptions as the room number increases
@@ -42,6 +52,9 @@ namespace DungeonExplorer
 
         }
 
+        /// <summary>
+        /// checks if the current room will have an item
+        /// </summary>
         public void GetItemRoom()
         {
             // generate a random number between 1 and 100 and compare it against the chance for an item
@@ -54,7 +67,10 @@ namespace DungeonExplorer
                 itemRoom = false;
             }
         }
-        
+
+        /// <summary>
+        /// randomly selects an item from the list of possible items
+        /// </summary>
         public void GetItem()
         {
              // generate a random item from the list

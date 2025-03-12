@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Media;
 
 namespace DungeonExplorer
 {
-    internal class Game
+    /// <summary>
+    /// Game class
+    /// Sets up the main gameplay
+    /// </summary>internal
+    class Game
     {
         private Player _player;
         private Room _currentRoom;
@@ -12,6 +17,9 @@ namespace DungeonExplorer
         public string userInput;
         public string playerName;
 
+        /// <summary>
+        /// Sets up game and Creates new objects for the Room and Player class
+        /// </summary>
         public Game()
         {
              // explain how the game works to user 
@@ -46,24 +54,34 @@ namespace DungeonExplorer
             playerName = userInput;
 
              // instantiate player and room objects
-            _player = new Player(playerName, 100);
+            _player = new Player(playerName);
             _currentRoom = new Room();
+
+             // ensure player and room objects were initialized correctly
+            Debug.Assert(_player != null, "Player object was not initialized correctly!");
+            Debug.Assert(_currentRoom != null, "Room object was not initialized correctly!");
         }
+
+        /// <summary>
+        /// Begins the running game logic
+        /// </summary>
         public void Start()
         {
              // Change the playing logic into true and populate the while loop
             playing = true;
             while (playing)
             {
+                 // ensure game loop is running correctly
+                Debug.Assert(playing, "Game loop stopped unexpectedly!");
+
                  // display room description to user
                 _currentRoom.GetDescription();
 
                  // check if player has reached end of the game
                 if (_currentRoom.roomNumber == 10) 
                 {
-                    Console.WriteLine($"\nyou have reached a dead end, it seems this is the end of your jouney {_player.Name}...");
-                    playing = false;
-                    continue;
+                    Console.WriteLine($"\nyou have reached a dead end, it seems this is the end of your jouney, {_player.Name}...");
+                    Environment.Exit(0); // exit the program
                 }
 
                  // begin user input loop to get game choices
@@ -104,6 +122,9 @@ namespace DungeonExplorer
                         // check if user input is valid
                         if (CheckUserInput(userInput, 1))
                         {
+                             // ensure room item exists
+                            Debug.Assert(!string.IsNullOrEmpty(_currentRoom.item), "Room item is null or empty!", "random item was not generated correctly");
+
                             _player.PickUpItem(_currentRoom.item);
                             getUserInput = false;
                             Console.Clear();
